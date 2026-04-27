@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Alğa Ultimate Handbook | Bereke Bank</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Manrope', sans-serif; background-color: #f8fafc; color: #1e293b; -webkit-tap-highlight-color: transparent; }
+        .glass-header { background: linear-gradient(135deg, #065f46 0%, #064e3b 100%); }
+        .tab-btn { transition: all 0.3s ease; white-space: nowrap; }
+        .tab-btn.active { background: #10b981; color: white; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
+        .card-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; height: 20px; width: 20px; border-radius: 50%; background: #10b981; cursor: pointer; border: 3px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .animate-fade-in { animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, opacity 0.3s ease; opacity: 0; }
+        .faq-answer.open { max-height: 600px; opacity: 1; }
+        .faq-icon { transition: transform 0.3s ease; }
+        .faq-item.open .faq-icon { transform: rotate(45deg); }
+        .step-badge { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 13px; flex-shrink: 0; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen pb-20">
+
+    <!-- Header -->
+    <header class="glass-header text-white pb-20 pt-8 px-6 rounded-b-[3rem] relative overflow-hidden shadow-2xl">
+        <div class="absolute top-0 right-0 w-80 h-80 bg-emerald-400/10 rounded-full -mr-20 -mt-20 blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-blue-400/10 rounded-full -ml-20 -mb-20 blur-3xl"></div>
+        
+        <div class="max-w-5xl mx-auto relative z-10">
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/30">
+                        <svg class="w-7 h-7 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl font-extrabold tracking-tight italic">Alğa</h1>
+                        <p class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-70">Internal Expert Guide</p>
+                    </div>
+                </div>
+                <div class="hidden sm:block text-right">
+                    <p class="text-xs font-bold bg-white/10 px-3 py-1 rounded-full border border-white/20">Update: Апрель 2026</p>
+                </div>
+            </div>
+            <h2 class="text-2xl sm:text-4xl font-extrabold mb-4 leading-tight">Продукт, который меняет <br><span class="text-emerald-400">правила игры.</span></h2>
+            <p class="text-emerald-100/80 max-w-xl text-sm sm:text-base leading-relaxed">Полный набор инструментов для работы с картой рассрочки Alğa: от точных тарифов до расчетов и операционных процессов в Way4.</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <div class="max-w-5xl mx-auto -mt-10 px-4 sticky top-4 z-50">
+        <nav class="bg-white/80 backdrop-blur-xl p-2 rounded-3xl shadow-xl border border-white flex space-x-1 overflow-x-auto no-scrollbar scroll-smooth">
+            <button onclick="switchTab('overview')" id="btn-overview" class="tab-btn active px-5 py-3 rounded-2xl text-sm font-bold flex-shrink-0">Обзор</button>
+            <button onclick="switchTab('tariffs')" id="btn-tariffs" class="tab-btn px-5 py-3 rounded-2xl text-sm font-bold flex-shrink-0">Тарифы</button>
+            <button onclick="switchTab('calculator')" id="btn-calculator" class="tab-btn px-5 py-3 rounded-2xl text-sm font-bold flex-shrink-0">Калькулятор</button>
+            <button onclick="switchTab('way4')" id="btn-way4" class="tab-btn px-5 py-3 rounded-2xl text-sm font-bold flex-shrink-0">Way4 Guide</button>
+            <button onclick="switchTab('faq')" id="btn-faq" class="tab-btn px-5 py-3 rounded-2xl text-sm font-bold flex-shrink-0">FAQ</button>
+            <button onclick="switchTab('quiz')" id="btn-quiz" class="tab-btn px-5 py-3 rounded-2xl text-sm font-bold flex-shrink-0">Квиз</button>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto px-4 mt-8 pb-10">
+        
+        <!-- ===================== SECTION: OVERVIEW ===================== -->
+        <div id="tab-overview" class="tab-content animate-fade-in space-y-8">
+            <!-- Key Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-white p-6 rounded-[2rem] card-shadow border border-gray-50">
+                    <p class="text-[10px] font-black uppercase text-gray-400 mb-2">Рассрочка</p>
+                    <p class="text-2xl font-black text-emerald-600 tracking-tighter italic">0-0-6</p>
+                    <p class="text-[10px] text-gray-500 mt-1">На все покупки от 1 000 ₸</p>
+                </div>
+                <div class="bg-white p-6 rounded-[2rem] card-shadow border border-gray-50">
+                    <p class="text-[10px] font-black uppercase text-gray-400 mb-2">Лимит до</p>
+                    <p class="text-2xl font-black text-blue-600 tracking-tighter">2 млн ₸</p>
+                    <p class="text-[10px] text-gray-500 mt-1">Возобновляемый</p>
+                </div>
+                <div class="bg-white p-6 rounded-[2rem] card-shadow border border-gray-50">
+                    <p class="text-[10px] font-black uppercase text-gray-400 mb-2">Обслуживание</p>
+                    <p class="text-xl font-black text-amber-500 tracking-tighter">0 ₸ (1-й год)</p>
+                    <p class="text-[10px] text-gray-500 mt-1">Со 2-го года: 1000 ₸ / мес</p>
+                </div>
+                <div class="bg-white p-6 rounded-[2rem] card-shadow border border-gray-50">
+                    <p class="text-[10px] font-black uppercase text-gray-400 mb-2">Возраст</p>
+                    <p class="text-2xl font-black text-purple-600 tracking-tighter">21–63</p>
+                    <p class="text-[10px] text-gray-500 mt-1">Лет (Резиденты РК)</p>
+                </div>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-emerald-900 text-white p-8 rounded-[2.5rem] relative overflow-hidden">
+                    <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-emerald-500/20 rounded-full blur-2xl"></div>
+                    <h3 class="text-xl font-black mb-6 flex items-center">
+                        <span class="w-2 h-6 bg-emerald-400 rounded-full mr-3"></span>
+                        Преимущества Alğa
+                    </h3>
+                    <ul class="space-y-4 text-sm font-medium text-emerald-100">
+                        <li class="flex items-start"><svg class="w-5 h-5 mr-3 text-emerald-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Рассрочка 0-0-6 на покупки в POS-терминалах и интернете по всему миру.</li>
+                        <li class="flex items-start"><svg class="w-5 h-5 mr-3 text-emerald-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Снятие наличных и переводы без комиссии банка (ставка 38%, ГЭСВ до 46%).</li>
+                        <li class="flex items-start"><svg class="w-5 h-5 mr-3 text-emerald-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Продление рассрочки до 36 мес. (с единовременной комиссией).</li>
+                        <li class="flex items-start"><svg class="w-5 h-5 mr-3 text-emerald-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Автопогашение при пополнении карты сверх обязательного платежа.</li>
+                        <li class="flex items-start"><svg class="w-5 h-5 mr-3 text-emerald-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Поддержка Mastercard и Visa. Оплата PIN-кодом, contactless и PAY-сервисами.</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-8 rounded-[2.5rem] border border-gray-100 card-shadow">
+                    <h3 class="text-xl font-black mb-6 flex items-center">
+                        <span class="w-2 h-6 bg-blue-500 rounded-full mr-3"></span>
+                        Каналы продаж
+                    </h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-4 bg-gray-50 rounded-2xl text-center">
+                            <span class="block text-lg mb-1">📱</span>
+                            <span class="text-[10px] font-bold uppercase text-gray-500">Приложение Bereke</span>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-2xl text-center">
+                            <span class="block text-lg mb-1">🏪</span>
+                            <span class="text-[10px] font-bold uppercase text-gray-500">СПФ (QR)</span>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-2xl text-center">
+                            <span class="block text-lg mb-1">📞</span>
+                            <span class="text-[10px] font-bold uppercase text-gray-500">Телемаркетинг</span>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-2xl text-center">
+                            <span class="block text-lg mb-1">🌐</span>
+                            <span class="text-[10px] font-bold uppercase text-gray-500">Сайт Bereke Bank</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- App Flow Card -->
+            <div class="bg-white p-8 rounded-[2.5rem] card-shadow border border-gray-100">
+                <h3 class="text-xl font-black mb-2 flex items-center">
+                    <span class="w-2 h-6 bg-purple-500 rounded-full mr-3"></span>
+                    Оформление карты через приложение Bereke Bank
+                </h3>
+                <p class="text-xs text-gray-400 font-medium mb-6">Путь клиента от заявки до активной карты</p>
+                <div class="flex flex-wrap gap-3">
+                    <div class="flex items-center bg-purple-50 border border-purple-100 rounded-2xl px-4 py-3 text-sm font-bold text-purple-800">
+                        <span class="step-badge bg-purple-500 text-white mr-3 text-xs">1</span>
+                        Главная → «Карта Alğa»
+                    </div>
+                    <div class="text-gray-300 self-center font-black">→</div>
+                    <div class="flex items-center bg-purple-50 border border-purple-100 rounded-2xl px-4 py-3 text-sm font-bold text-purple-800">
+                        <span class="step-badge bg-purple-500 text-white mr-3 text-xs">2</span>
+                        «Подать заявку»
+                    </div>
+                    <div class="text-gray-300 self-center font-black">→</div>
+                    <div class="flex items-center bg-purple-50 border border-purple-100 rounded-2xl px-4 py-3 text-sm font-bold text-purple-800">
+                        <span class="step-badge bg-purple-500 text-white mr-3 text-xs">3</span>
+                        Ввод кода из SMS
+                    </div>
+                    <div class="text-gray-300 self-center font-black">→</div>
+                    <div class="flex items-center bg-purple-50 border border-purple-100 rounded-2xl px-4 py-3 text-sm font-bold text-purple-800">
+                        <span class="step-badge bg-purple-500 text-white mr-3 text-xs">4</span>
+                        Решение (~2 мин)
+                    </div>
+                    <div class="text-gray-300 self-center font-black">→</div>
+                    <div class="flex items-center bg-purple-50 border border-purple-100 rounded-2xl px-4 py-3 text-sm font-bold text-purple-800">
+                        <span class="step-badge bg-purple-500 text-white mr-3 text-xs">5</span>
+                        Подписание документов (ЭЦП)
+                    </div>
+                    <div class="text-gray-300 self-center font-black">→</div>
+                    <div class="flex items-center bg-emerald-50 border border-emerald-200 rounded-2xl px-4 py-3 text-sm font-bold text-emerald-800">
+                        <span class="step-badge bg-emerald-500 text-white mr-3 text-xs">✓</span>
+                        Карта открыта!
+                    </div>
+                </div>
+                <p class="mt-4 text-[11px] text-gray-400 font-medium">Пластиковую карту Alğa можно получить в любом отделении банка. До этого доступны виртуальные операции.</p>
+            </div>
+        </div>
+
+        <!-- ===================== SECTION: TARIFFS ===================== -->
+        <div id="tab-tariffs" class="tab-content animate-fade-in hidden space-y-6">
+            <div class="bg-white rounded-[2.5rem] p-8 card-shadow border border-gray-100">
+                <h2 class="text-2xl font-black mb-8 flex items-center">
+                    <span class="w-2 h-8 bg-emerald-500 rounded-full mr-3"></span>
+                    Подробные тарифы и условия
+                </h2>
+
+                <div class="space-y-4">
+                    <!-- Row 1: Обслуживание -->
+                    <div class="group flex flex-col md:flex-row md:items-center justify-between p-6 bg-gray-50 rounded-3xl border border-gray-100 hover:bg-white hover:border-emerald-200 transition-all">
+                        <div class="mb-4 md:mb-0">
+                            <h4 class="font-black text-gray-900 text-base">Выпуск и годовое обслуживание</h4>
+                            <p class="text-xs text-gray-500 mt-1">Открытие счета, выпуск пластика</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-emerald-600 font-black text-xl italic block">0 ₸ (1-й год)</span>
+                            <span class="text-xs text-rose-600 font-bold block mt-1">Со 2-го года: 1 000 ₸ в месяц</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Retail -->
+                    <div class="group flex flex-col md:flex-row md:items-center justify-between p-6 bg-gray-50 rounded-3xl border border-gray-100 hover:bg-white hover:border-emerald-200 transition-all">
+                        <div class="mb-4 md:mb-0">
+                            <h4 class="font-black text-gray-900 text-base">Безналичные покупки (Retail)</h4>
+                            <p class="text-xs text-gray-500 mt-1">Чек от 1 000 ₸ → автоматическая рассрочка на 6 мес.</p>
+                            <p class="text-xs text-amber-600 font-bold mt-1">⚠️ Чек менее 1 000 ₸ — не является рассрочкой</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-emerald-600 font-black text-xl italic">0% (на 6 мес.)</span>
+                            <p class="text-[10px] text-gray-400 mt-1">Мин. платеж: 1/6 от суммы в мес.</p>
+                        </div>
+                    </div>
+
+                    <!-- Row 3: Cash -->
+                    <div class="group flex flex-col md:flex-row md:items-center justify-between p-6 bg-blue-50 rounded-3xl border border-blue-100 hover:bg-white hover:border-blue-300 transition-all">
+                        <div class="mb-4 md:mb-0">
+                            <h4 class="font-black text-gray-900 text-base">Снятие наличных и Переводы (Cash)</h4>
+                            <p class="text-xs text-gray-500 mt-1">В любых банкоматах мира, а также переводы внутри банка и межбанк</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-blue-700 font-black text-xl">0 ₸ комиссия</p>
+                            <p class="text-[10px] font-bold text-gray-500">Начисляется <span class="text-rose-600">38% годовых</span></p>
+                            <p class="text-[10px] font-bold text-gray-400 mt-1">ГЭСВ до 46%</p>
+                        </div>
+                    </div>
+
+                    <!-- Row 4: Услуги -->
+                    <div class="group flex flex-col md:flex-row md:items-center justify-between p-6 bg-gray-50 rounded-3xl border border-gray-100 hover:bg-white hover:border-emerald-200 transition-all">
+                        <div class="mb-4 md:mb-0">
+                            <h4 class="font-black text-gray-900 text-base">Дополнительные услуги</h4>
+                            <p class="text-xs text-gray-500 mt-1">Уведомления и управление картой</p>
+                        </div>
+                        <div class="space-y-1 text-right text-[11px] font-bold text-gray-600">
+                            <p>SMS / PUSH уведомления: <span class="text-emerald-600">0 ₸</span></p>
+                            <p>Смена ПИН-кода: <span class="text-emerald-600">0 ₸</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Row 5: Prolongation -->
+                    <div class="group flex flex-col md:flex-row md:items-center justify-between p-6 bg-gray-50 rounded-3xl border border-gray-100 hover:bg-white hover:border-amber-200 transition-all">
+                        <div class="mb-4 md:mb-0">
+                            <h4 class="font-black text-gray-900 text-base">Пролонгация (продление рассрочки)</h4>
+                            <p class="text-xs text-gray-500 mt-1">Разовая комиссия, доступна не ранее чем через 6 мес.</p>
+                            <p class="text-xs text-blue-600 font-medium mt-1">6 мес → 12 мес. | 6 мес → 24 мес. | 6 мес → 36 мес.</p>
+                        </div>
+                        <div class="space-y-1 text-right flex flex-col items-end">
+                            <span class="inline-block bg-amber-100 text-amber-700 text-[10px] font-black px-3 py-1 rounded-lg">12 мес: 5%</span>
+                            <span class="inline-block bg-amber-100 text-amber-700 text-[10px] font-black px-3 py-1 rounded-lg">24 мес: 15%</span>
+                            <span class="inline-block bg-amber-100 text-amber-700 text-[10px] font-black px-3 py-1 rounded-lg">36 мес: 25%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Warnings & Penalties Section -->
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="p-6 bg-rose-50 rounded-[2rem] border border-rose-100">
+                        <h5 class="text-rose-800 font-black text-[10px] uppercase tracking-widest mb-3">⚠️ Исключения и Штрафы</h5>
+                        <ul class="text-[11px] text-rose-700 space-y-2 font-medium">
+                            <li><strong class="text-rose-900">Не рассрочка (идет под 38%):</strong> Покупки менее 1 000 ₸, казино, лотереи, эл. кошельки, криптоплатформы.</li>
+                            <li class="pt-2 border-t border-rose-200"><strong class="text-rose-900">Пеня за просрочку:</strong> 0,5% от суммы просроченного платежа за каждый день (но не более 10% от суммы займа в год).</li>
+                            <li class="pt-2 border-t border-rose-200"><strong class="text-rose-900">Неактивность карты:</strong> До 2 000 ₸ в мес (если нет движения >12 мес. при положительном остатке).</li>
+                        </ul>
+                    </div>
+                    <div class="p-6 bg-emerald-50 rounded-[2rem] border border-emerald-100 flex flex-col justify-between">
+                        <div>
+                            <h5 class="text-emerald-800 font-black text-[10px] uppercase tracking-widest mb-3">📋 Требования и Лимиты</h5>
+                            <ul class="text-[11px] text-emerald-700 space-y-2 font-medium mb-4">
+                                <li>⏳ <strong>Срок карты:</strong> 60 месяцев (по умолчанию).</li>
+                                <li>🛡 <strong>Обеспечение:</strong> Без залогового обеспечения.</li>
+                                <li>🎯 <strong>Цель:</strong> Потребительские цели (подтверждение не требуется).</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl border border-emerald-200">
+                            <p class="text-[10px] font-bold text-gray-500 mb-1">Макс. бланковый лимит на заемщика:</p>
+                            <p class="text-xs font-black text-emerald-800">VIP / ЗП-проект / Сотрудники: <span class="text-lg">8 млн ₸</span></p>
+                            <p class="text-xs font-black text-blue-800">Физ. лица: <span class="text-lg">6 млн ₸</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline example -->
+                <div class="mt-6 p-6 bg-slate-900 rounded-[2rem] text-white">
+                    <h5 class="font-black text-sm mb-4 text-emerald-400">📊 Пример расчета ежемесячного платежа из инструкции</h5>
+                    <div class="text-xs text-slate-300 space-y-2">
+                        <p>Лимит карты: <span class="text-white font-black">200 000 ₸</span></p>
+                        <p>Покупка в ТД Технодом: <span class="text-emerald-400 font-black">120 000 ₸</span> (рассрочка 6 мес) → платеж <span class="text-emerald-400 font-bold">20 000 ₸/мес</span></p>
+                        <p>Перевод: <span class="text-blue-400 font-black">50 000 ₸</span> → основной долг 5% = 2 500 ₸ + проценты 38%/360×20 дн = 1 055,56 ₸ → <span class="text-blue-400 font-bold">3 555,56 ₸</span></p>
+                        <p>Покупка кофе: <span class="text-amber-400 font-black">900 ₸</span> → платеж <span class="text-amber-400 font-bold">900 ₸</span> (т.к. &lt;1 000 ₸ — не рассрочка)</p>
+                        <div class="mt-3 pt-3 border-t border-white/10">
+                            <p class="text-white font-black text-base">Итого к 20 числу: 20 000 + 3 555,56 + 900 = <span class="text-emerald-400">24 455,56 ₸</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================== SECTION: CALCULATOR ===================== -->
+        <div id="tab-calculator" class="tab-content animate-fade-in hidden space-y-6">
+            <div class="bg-white rounded-[3rem] p-8 card-shadow border border-gray-100">
+                <div class="flex flex-col lg:flex-row gap-12">
+                    <!-- Inputs -->
+                    <div class="flex-1 space-y-8">
+                        <div>
+                            <h2 class="text-2xl font-black text-gray-900 italic tracking-tight mb-2">Smart Calculator Alğa</h2>
+                            <p class="text-sm text-gray-500 font-medium">Инструмент для точного расчета первого и последующих ежемесячных платежей.</p>
+                        </div>
+
+                        <div class="space-y-6">
+                            <div class="relative group">
+                                <label class="text-[10px] font-black uppercase text-gray-400 tracking-widest absolute -top-2 left-4 bg-white px-2 z-10 transition-colors group-focus-within:text-emerald-500">Сумма покупок (Рассрочка)</label>
+                                <div class="relative">
+                                    <input type="number" id="retail-val" value="120000" class="w-full bg-slate-50 border-2 border-gray-100 rounded-2xl px-6 py-5 text-2xl font-black focus:border-emerald-500 focus:bg-white outline-none transition-all" oninput="calculate()">
+                                    <span class="absolute right-6 top-1/2 -translate-y-1/2 text-gray-300 font-black">₸</span>
+                                </div>
+                            </div>
+
+                            <div class="relative group">
+                                <label class="text-[10px] font-black uppercase text-gray-400 tracking-widest absolute -top-2 left-4 bg-white px-2 z-10 transition-colors group-focus-within:text-blue-500">Наличные / Переводы (Cash)</label>
+                                <div class="relative">
+                                    <input type="number" id="cash-val" value="50000" class="w-full bg-slate-50 border-2 border-gray-100 rounded-2xl px-6 py-5 text-2xl font-black focus:border-blue-500 focus:bg-white outline-none transition-all" oninput="calculate()">
+                                    <span class="absolute right-6 top-1/2 -translate-y-1/2 text-gray-300 font-black">₸</span>
+                                </div>
+                            </div>
+
+                            <div class="bg-blue-50/50 p-6 rounded-3xl border border-blue-100/50">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-xs font-black text-blue-900 uppercase tracking-tighter">Дней пользования Cash <span class="text-[10px] bg-rose-100 text-rose-700 px-2 py-0.5 rounded ml-2">ТОЛЬКО ПЕРВЫЙ ПЛАТЕЖ</span></span>
+                                    <span id="days-label" class="bg-blue-600 text-white px-3 py-1 rounded-xl text-sm font-black">20 дней</span>
+                                </div>
+                                <p class="text-[10px] text-blue-700 font-medium mb-3">Кол-во дней с момента снятия наличных до даты выставления ПЕРВОЙ выписки (до 1-го числа).</p>
+                                <input type="range" id="days-slider" min="1" max="30" value="20" class="w-full h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer" oninput="calculate()">
+                            </div>
+
+                            <div class="p-4 bg-amber-50 rounded-2xl border border-amber-100">
+                                <p class="text-[10px] text-amber-700 font-bold">⚠️ Покупки менее 1 000 ₸ не делятся на 6 мес., а включаются в первый платеж полностью (либо по правилу мин. платежа 5%).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visual Result -->
+                    <div class="lg:w-96 flex flex-col">
+                        
+                        <!-- FIRST PAYMENT BLOCK -->
+                        <div class="bg-slate-900 rounded-[2.5rem] p-8 text-white relative overflow-hidden flex-1 shadow-2xl shadow-emerald-900/20">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full -mr-16 -mt-16"></div>
+                            
+                            <p class="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-400 mb-1">ПЕРВЫЙ ПЛАТЕЖ (К 20 ЧИСЛУ)</p>
+                            <h3 id="res-total" class="text-5xl font-black italic tracking-tighter mb-6 leading-none text-emerald-400">0 ₸</h3>
+                            
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <span class="w-2 h-2 rounded-full bg-emerald-500 mr-2"></span>
+                                        <span class="text-[11px] font-bold text-gray-400">Рассрочка (1/6)</span>
+                                    </div>
+                                    <span id="res-retail" class="text-xs font-black text-white">+ 0 ₸</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <span class="w-2 h-2 rounded-full bg-blue-500 mr-2"></span>
+                                        <span class="text-[11px] font-bold text-gray-400">Cash: Мин. ОД (5%)</span>
+                                    </div>
+                                    <span id="res-cash" class="text-xs font-black text-white">+ 0 ₸</span>
+                                </div>
+                                <div class="flex justify-between items-center border-t border-white/10 pt-2">
+                                    <div class="flex items-center">
+                                        <span class="w-2 h-2 rounded-full bg-amber-500 mr-2"></span>
+                                        <span class="text-[11px] font-bold text-gray-400">Cash: Проценты <span id="days-display-text" class="text-[9px] text-gray-500 ml-1">(за 20 дн)</span></span>
+                                    </div>
+                                    <span id="res-interest" class="text-xs font-black text-white">+ 0 ₸</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- NEXT MONTH PREDICTION BLOCK -->
+                        <div class="mt-4 bg-white border-2 border-emerald-100 rounded-[2.5rem] p-6 shadow-sm">
+                            <p class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-1">ЕП (ПОСЛЕДУЮЩИЕ ПЛАТЕЖИ)</p>
+                            <h3 id="res-next-month" class="text-3xl font-black italic tracking-tighter text-gray-900 mb-4 leading-none">0 ₸</h3>
+                            
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center text-[10px]">
+                                    <span class="font-bold text-gray-400">Рассрочка (1/6)</span>
+                                    <span id="res-next-retail" class="font-black text-gray-700">0 ₸</span>
+                                </div>
+                                <div class="flex justify-between items-center text-[10px]">
+                                    <span class="font-bold text-gray-400">Cash: ОД (5% от остатка)</span>
+                                    <span id="res-next-cash" class="font-black text-gray-700">0 ₸</span>
+                                </div>
+                                <div class="flex justify-between items-center text-[10px] border-t border-gray-100 pt-1">
+                                    <span class="font-bold text-gray-400">Cash: Проценты (за 30 дн)</span>
+                                    <span id="res-next-interest" class="font-black text-gray-700">0 ₸</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 bg-white border-2 border-gray-100 rounded-[2.5rem] p-4" style="height:180px;">
+                            <canvas id="calcChart"></canvas>
+                        </div>
+
+                        <div class="mt-4 p-4 bg-emerald-50 rounded-2xl border border-emerald-100 flex items-center space-x-3">
+                            <span class="text-xl">💡</span>
+                            <p class="text-[10px] text-emerald-800 font-medium italic leading-snug">При пополнении сверх обязательного платежа — долг гасится досрочно, лимит восстанавливается, переплата падает.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAYMENT SCHEDULE TABLE -->
+            <div class="bg-white rounded-[3rem] p-8 card-shadow border border-gray-100">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h3 class="text-xl font-black text-gray-900 italic tracking-tight">График платежей</h3>
+                        <p class="text-[11px] text-gray-400 font-medium mt-1">Полный расчёт по месяцам до закрытия долга</p>
+                    </div>
+                    <div id="schedule-total-badge" class="bg-slate-900 text-white px-4 py-2 rounded-2xl text-xs font-black">
+                        Переплата: <span id="schedule-overpay">—</span>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-xs" id="schedule-table">
+                        <thead>
+                            <tr class="border-b-2 border-gray-100">
+                                <th class="text-left pb-3 text-[10px] font-black text-gray-400 uppercase tracking-widest pr-4">Мес.</th>
+                                <th class="text-right pb-3 text-[10px] font-black text-emerald-600 uppercase tracking-widest pr-4">Рассрочка</th>
+                                <th class="text-right pb-3 text-[10px] font-black text-blue-600 uppercase tracking-widest pr-4">Cash ОД</th>
+                                <th class="text-right pb-3 text-[10px] font-black text-amber-600 uppercase tracking-widest pr-4">Проценты</th>
+                                <th class="text-right pb-3 text-[10px] font-black text-gray-700 uppercase tracking-widest pr-4">Итого</th>
+                                <th class="text-right pb-3 text-[10px] font-black text-gray-400 uppercase tracking-widest">Остаток Cash</th>
+                            </tr>
+                        </thead>
+                        <tbody id="schedule-body">
+                            <tr><td colspan="6" class="text-center text-gray-300 py-8 font-bold">Введите суммы выше ↑</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================== SECTION: WAY4 ===================== -->
+        <div id="tab-way4" class="tab-content animate-fade-in hidden space-y-8">
+            <div class="bg-white rounded-[3rem] overflow-hidden card-shadow border border-gray-100">
+                <div class="p-8 bg-slate-900 text-white flex items-center justify-between">
+                    <div>
+                        <h2 class="text-2xl font-black mb-1 flex items-center">
+                            <span class="text-emerald-400 mr-2">/</span> Way4 Guide
+                        </h2>
+                        <p class="text-xs text-slate-400 font-bold uppercase tracking-widest">Операционная шпаргалка для сотрудников</p>
+                    </div>
+                    <div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                    </div>
+                </div>
+
+                <div class="p-8 space-y-12">
+
+                    <!-- Step 1: Поиск клиента -->
+                    <div class="relative pl-8 border-l-2 border-emerald-500/20">
+                        <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-emerald-500 border-4 border-white shadow-sm"></div>
+                        <h4 class="text-lg font-black text-gray-900 mb-4 uppercase tracking-tighter">1. Поиск клиента и проверка лимита</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="p-5 bg-slate-50 rounded-2xl border border-gray-100">
+                                <p class="text-[11px] font-black text-emerald-600 mb-3 uppercase tracking-widest">Путь в меню:</p>
+                                <p class="text-sm font-bold text-gray-700 font-mono">Меню → Contract Info View</p>
+                                <p class="text-xs text-gray-500 mt-1">Column = <strong>Client</strong>, ввести ФИО / ИИН</p>
+                                <div class="mt-4 space-y-2">
+                                    <div class="flex justify-between text-[11px] bg-white p-2 rounded-lg border">
+                                        <span class="text-gray-400">Вкладка «Subs»</span>
+                                        <span class="font-black">→ данные карты</span>
+                                    </div>
+                                    <div class="flex justify-between text-[11px] bg-white p-2 rounded-lg border">
+                                        <span class="text-gray-400">Кнопка «Cr Limit»</span>
+                                        <span class="font-black">→ «Result Amount»</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-5 bg-slate-50 rounded-2xl border border-gray-100">
+                                <p class="text-[11px] font-black text-blue-600 mb-3 uppercase tracking-widest">Что проверяем (Contract):</p>
+                                <ul class="text-[11px] space-y-2 text-gray-700 font-medium">
+                                    <li><span class="font-black text-gray-900">BRANCH</span> — SPF116TAU 116</li>
+                                    <li><span class="font-black text-gray-900">STATUS</span> — Account OK</li>
+                                    <li><span class="font-black text-gray-900">CURR</span> — KZT</li>
+                                    <li><span class="font-black text-gray-900">PRODUCT</span> — KZT Universal CreditCard INSTALMENTS</li>
+                                    <li><span class="font-black text-gray-900">AMOUNT_AVAILABLE</span> — доступный остаток</li>
+                                </ul>
+                                <p class="text-[11px] font-black text-blue-600 mt-3 uppercase tracking-widest">Что проверяем (Subs / карта):</p>
+                                <ul class="text-[11px] space-y-1 text-gray-700 font-medium mt-2">
+                                    <li><span class="font-black text-gray-900">STATUS</span> — Card OK</li>
+                                    <li><span class="font-black text-gray-900">CONTR_SUBTYPE</span> — 038-Master Card World Credit</li>
+                                    <li><span class="font-black text-gray-900">CARD_EXPIRE</span> — срок действия карты</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Balance Prediction -->
+                    <div class="relative pl-8 border-l-2 border-emerald-500/20">
+                        <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-emerald-500 border-4 border-white shadow-sm"></div>
+                        <h4 class="text-lg font-black text-gray-900 mb-4 uppercase tracking-tighter">2. Прогноз баланса (Balance Prediction)</h4>
+                        <div class="p-5 bg-slate-50 rounded-2xl border border-gray-100 mb-4">
+                            <p class="text-[11px] font-black text-emerald-600 mb-3 uppercase tracking-widest">Путь в меню:</p>
+                            <p class="text-sm font-bold text-gray-700 font-mono">Меню → Issuing Contracts – Balance Prediction</p>
+                            <p class="text-xs text-gray-500 mt-1">Column = <strong>Contract#</strong>, ввести номер договора клиента</p>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <ol class="space-y-3">
+                                <li class="flex items-start text-[12px] font-medium text-gray-700">
+                                    <span class="step-badge bg-emerald-500 text-white mr-3 text-xs mt-0.5" style="width:22px;height:22px;font-size:10px">1</span>
+                                    Открыть «Issuing Contracts – Balance Prediction»
+                                </li>
+                                <li class="flex items-start text-[12px] font-medium text-gray-700">
+                                    <span class="step-badge bg-emerald-500 text-white mr-3 text-xs mt-0.5" style="width:22px;height:22px;font-size:10px">2</span>
+                                    В поле Contract# ввести номер договора → нажать Enter
+                                </li>
+                                <li class="flex items-start text-[12px] font-medium text-gray-700">
+                                    <span class="step-badge bg-emerald-500 text-white mr-3 text-xs mt-0.5" style="width:22px;height:22px;font-size:10px">3</span>
+                                    Откроется форма «Prediction» → нажать кнопку «k» (запуск расчёта)
+                                </li>
+                                <li class="flex items-start text-[12px] font-medium text-gray-700">
+                                    <span class="step-badge bg-emerald-500 text-white mr-3 text-xs mt-0.5" style="width:22px;height:22px;font-size:10px">4</span>
+                                    Всплывёт «Information: Successfully Completed» → нажать OK
+                                </li>
+                                <li class="flex items-start text-[12px] font-medium text-gray-700">
+                                    <span class="step-badge bg-emerald-500 text-white mr-3 text-xs mt-0.5" style="width:22px;height:22px;font-size:10px">5</span>
+                                    Нажать кнопку «Log» → вкладка «Acnt balance prediction» → «Messages»
+                                </li>
+                            </ol>
+                            <div class="p-4 bg-blue-50 rounded-2xl border border-blue-100">
+                                <p class="text-[11px] font-black text-blue-700 mb-3 uppercase tracking-widest">Трактовка «To Pay Closure»:</p>
+                                <ul class="text-[11px] text-blue-800 space-y-2 font-medium">
+                                    <li>✅ Сумма <strong>с плюсом</strong> — это общая сумма задолженности.</li>
+                                    <li>⚪ Сумма <strong>с минусом</strong> — задолженности нет, это собственные средства.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Блокировка/Разблокировка -->
+                    <div class="relative pl-8 border-l-2 border-emerald-500/20">
+                        <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-emerald-500 border-4 border-white shadow-sm"></div>
+                        <h4 class="text-lg font-black text-gray-900 mb-4 uppercase tracking-tighter">3. Блокировка / Разблокировка карты</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="p-5 bg-rose-50 rounded-2xl border border-rose-100">
+                                <p class="text-[11px] font-black text-rose-700 mb-3 uppercase tracking-widest">По инициативе клиента</p>
+                                <div class="text-xs text-gray-700 space-y-2 font-medium">
+                                    <p class="font-black text-gray-900">Путь: Меню → Блокировка/разблокировка контракта клиента</p>
+                                    <p class="mt-2">Поводы для блокировки:</p>
+                                    <ul class="ml-3 space-y-1 text-gray-600">
+                                        <li>1) Утрата карты — <strong>Cash-блокировка</strong> (временная)</li>
+                                        <li>2) Полная блокировка (утеря, компрометация данных)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="p-5 bg-amber-50 rounded-2xl border border-amber-100">
+                                <p class="text-[11px] font-black text-amber-700 mb-3 uppercase tracking-widest">По инициативе банка</p>
+                                <div class="text-xs text-gray-700 space-y-2 font-medium">
+                                    <p class="font-black text-gray-900">Путь: Меню → Блокировка/разблокировка контракта клиента</p>
+                                    <p class="mt-2">Поводы:</p>
+                                    <ul class="ml-3 space-y-1 text-gray-600">
+                                        <li>1) Утрата карты — <strong>Cash-блокировка</strong></li>
+                                        <li>2) Подозрение на мошенничество — полная блокировка</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Таблица счетов -->
+                    <div class="relative pl-8 border-l-2 border-emerald-500/20">
+                        <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-emerald-500 border-4 border-white shadow-sm"></div>
+                        <h4 class="text-lg font-black text-gray-900 mb-4 uppercase tracking-tighter">4. Типы счетов (задолженность в Accounts)</h4>
+                        <div class="p-6 bg-slate-50 rounded-[2rem] border border-gray-100 overflow-x-auto">
+                            <table class="w-full text-left">
+                                <thead>
+                                    <tr class="text-[10px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-200">
+                                        <th class="pb-4 pr-4">Тип счета</th>
+                                        <th class="pb-4 pr-4">Назначение</th>
+                                        <th class="pb-4">Subtype</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-sm font-bold text-gray-700">
+                                    <tr class="border-b border-gray-100">
+                                        <td class="py-4 pr-4 font-mono text-xs">1403-Inst</td>
+                                        <td class="py-4 pr-4 text-emerald-600 italic">Основной счет рассрочки</td>
+                                        <td class="py-4 font-mono text-xs">038</td>
+                                    </tr>
+                                    <tr class="border-b border-gray-100">
+                                        <td class="py-4 pr-4 font-mono text-xs">1403-MinPay</td>
+                                        <td class="py-4 pr-4 text-blue-600 italic">Мин. платеж по Cash (5%)</td>
+                                        <td class="py-4 font-mono text-xs">038</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-4 pr-4 font-mono text-xs">1740-Intst</td>
+                                        <td class="py-4 pr-4 text-amber-600 italic">Начисленные проценты 38%</td>
+                                        <td class="py-4 font-mono text-xs">038</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Step 5: Reports (Cardholder Reports) -->
+                    <div class="relative pl-8 border-l-2 border-emerald-500/20">
+                        <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-emerald-500 border-4 border-white shadow-sm"></div>
+                        <h4 class="text-lg font-black text-gray-900 mb-4 uppercase tracking-tighter">5. Выгрузка отчетов (Cardholder Reports)</h4>
+                        <div class="p-5 bg-slate-50 rounded-2xl border border-gray-100 mb-4">
+                            <p class="text-[11px] font-black text-emerald-600 mb-2 uppercase tracking-widest">Путь в меню:</p>
+                            <p class="text-sm font-bold text-gray-700 font-mono">Меню → Отчеты → Cardholder Reports</p>
+                            <p class="text-xs text-gray-500 mt-1">Ввести номер карты → выбрать тип отчета <strong>«Date Range Cardholder Contract Statement»</strong></p>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="p-4 bg-white border border-gray-100 rounded-2xl text-center hover:border-emerald-500 transition-colors">
+                                <p class="text-xs font-black mb-2">Statement</p>
+                                <p class="text-[10px] text-gray-500">Выписка по всем операциям за период (Date From / Date To)</p>
+                            </div>
+                            <div class="p-4 bg-white border border-gray-100 rounded-2xl text-center hover:border-emerald-500 transition-colors">
+                                <p class="text-xs font-black mb-2">Instalment Plan</p>
+                                <p class="text-[10px] text-gray-500">График порций рассрочки клиента</p>
+                            </div>
+                            <div class="p-4 bg-white border border-gray-100 rounded-2xl text-center hover:border-emerald-500 transition-colors">
+                                <p class="text-xs font-black mb-2">Log Operations</p>
+                                <p class="text-[10px] text-gray-500">История изменений лимита и операций</p>
+                            </div>
+                        </div>
+                        <div class="mt-4 p-4 bg-blue-50 rounded-2xl border border-blue-100">
+                            <p class="text-[11px] text-blue-700 font-medium">💾 После генерации отчета — указать путь сохранения файла на ПК. Выбрать формат "Веб-страница полностью".</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================== SECTION: FAQ ===================== -->
+        <div id="tab-faq" class="tab-content animate-fade-in hidden space-y-6">
+            <div class="bg-white rounded-[2.5rem] p-8 card-shadow border border-gray-100">
+                <h2 class="text-2xl font-black mb-2 flex items-center">
+                    <span class="w-2 h-8 bg-amber-500 rounded-full mr-3"></span>
+                    Часто задаваемые вопросы
+                </h2>
+                <p class="text-sm text-gray-400 font-medium mb-8">Реальные вопросы клиентов и сотрудников — с правильными ответами</p>
+
+                <div class="space-y-3" id="faq-list">
+
+                    <!-- FAQ группа: Рассрочка -->
+                    <div class="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-600 px-2 pt-4 pb-1">💳 Рассрочка</div>
+
+                    <div class="faq-item border border-gray-100 rounded-2xl overflow-hidden">
+                        <button onclick="toggleFaq(this)" class="w-full p-5 text-left flex items-center justify-between font-bold text-sm text-gray-900 hover:bg-gray-50 transition-colors">
+                            <span>Будет ли рассрочка 0% на покупку в 900 тенге?</span>
+                            <span class="faq-icon text-emerald-500 text-xl font-black flex-shrink-0 ml-4">+</span>
+                        </button>
+                        <div class="faq-answer px-5 pb-5 text-sm text-gray-600 font-medium leading-relaxed">
+                            <strong class="text-rose-600">Нет.</strong> Рассрочка 0-0-6 активируется только на чеки <strong>от 1 000 тенге и выше</strong>. Покупка в 900 ₸ будет учтена как обычная сумма — выставляется к оплате полностью (или по правилам минимального платежа 5%).
+                        </div>
+                    </div>
+
+                    <div class="faq-item border border-gray-100 rounded-2xl overflow-hidden">
+                        <button onclick="toggleFaq(this)" class="w-full p-5 text-left flex items-center justify-between font-bold text-sm text-gray-900 hover:bg-gray-50 transition-colors">
+                            <span>Можно ли продлить рассрочку? Какие сроки и комиссии?</span>
+                            <span class="faq-icon text-emerald-500 text-xl font-black flex-shrink-0 ml-4">+</span>
+                        </button>
+                        <div class="faq-answer px-5 pb-5 text-sm text-gray-600 font-medium leading-relaxed">
+                            <strong class="text-emerald-700">Да, пролонгация доступна.</strong> Продление возможно только в том месяце, в котором совершена покупка (после технической реализации функционала). Варианты:
+                            <ul class="mt-2 ml-4 space-y-1 list-disc">
+                                <li>С 6 на 12 мес. (разовая комиссия 5%)</li>
+                                <li>С 6 на 24 мес. (разовая комиссия 15%)</li>
+                                <li>С 6 на 36 мес. (разовая комиссия 25%)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item border border-gray-100 rounded-2xl overflow-hidden">
+                        <button onclick="toggleFaq(this)" class="w-full p-5 text-left flex items-center justify-between font-bold text-sm text-gray-900 hover:bg-gray-50 transition-colors">
+                            <span>Как считается платеж, если в месяце было несколько покупок разными датами?</span>
+                            <span class="faq-icon text-emerald-500 text-xl font-black flex-shrink-0 ml-4">+</span>
+                        </button>
+                        <div class="faq-answer px-5 pb-5 text-sm text-gray-600 font-medium leading-relaxed">
+                            Каждая покупка формирует отдельную «порцию» рассрочки (instalment). Все порции суммируются в ежемесячный платеж. Например, покупка 10.04 и покупка 15.04 — обе войдут в платеж к 20.05 (1/6 от каждой покупки).
+                        </div>
+                    </div>
+
+                    <!-- FAQ группа: Cash -->
+                    <div class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-600 px-2 pt-4 pb-1">💸 Наличные и переводы</div>
+
+                    <div class="faq-item border border-gray-100 rounded-2xl overflow-hidden">
+                        <button onclick="toggleFaq(this)" class="w-full p-5 text-left flex items-center justify-between font-bold text-sm text-gray-900 hover:bg-gray-50 transition-colors">
+                            <span>Клиент спрашивает: почему у него 38%, ведь он не снимал наличные?</span>
+                            <span class="faq-icon text-emerald-500 text-xl font-black flex-shrink-0 ml-4">+</span>
+                        </button>
+                        <div class="faq-answer px-5 pb-5 text-sm text-gray-600 font-medium leading-relaxed">
+                            <strong>Переводы также считаются Cash-операцией</strong>, даже если клиент не снимал в банкомате. К Cash относятся: снятие наличных, переводы на другие карты/счета, пополнение электронных кошельков, казино, лотереи, букмекеры. Комиссия за сам перевод = 0 ₸, но на эту сумму <strong>сразу начисляется ставка 38% годовых</strong>.
+                        </div>
+                    </div>
+
+                    <!-- FAQ группа: Платежи -->
+                    <div class="text-[10px] font-black uppercase tracking-[0.2em] text-rose-600 px-2 pt-4 pb-1">📅 Платежи и просрочка</div>
+
+                    <div class="faq-item border border-gray-100 rounded-2xl overflow-hidden">
+                        <button onclick="toggleFaq(this)" class="w-full p-5 text-left flex items-center justify-between font-bold text-sm text-gray-900 hover:bg-gray-50 transition-colors">
+                            <span>До какого числа нужно погасить платеж?</span>
+                            <span class="faq-icon text-emerald-500 text-xl font-black flex-shrink-0 ml-4">+</span>
+                        </button>
+                        <div class="faq-answer px-5 pb-5 text-sm text-gray-600 font-medium leading-relaxed">
+                            Ежемесячный платеж необходимо погасить <strong>до 20-го числа</strong> месяца, следующего за расчетным. Платеж выставляется 1-го числа. Оплатить можно в любой день с 1 по 20 число.
+                        </div>
+                    </div>
+
+                    <div class="faq-item border border-gray-100 rounded-2xl overflow-hidden">
+                        <button onclick="toggleFaq(this)" class="w-full p-5 text-left flex items-center justify-between font-bold text-sm text-gray-900 hover:bg-gray-50 transition-colors">
+                            <span>Что будет, если не заплатить до 20-го? Какая пеня?</span>
+                            <span class="faq-icon text-emerald-500 text-xl font-black flex-shrink-0 ml-4">+</span>
+                        </button>
+                        <div class="faq-answer px-5 pb-5 text-sm text-gray-600 font-medium leading-relaxed">
+                            С <strong>21-го числа</strong> образуется просроченная задолженность. Начисляется неустойка (пеня) в размере <strong>0,5% от суммы просроченного платежа за каждый день</strong> (но не более 10% от суммы займа в год). Информация передается в <strong>ПКБ/ГКБ</strong>, что негативно влияет на кредитную историю клиента.
+                        </div>
+                    </div>
+
+                    <!-- FAQ группа: Справки и Пополнение -->
+                    <div class="text-[10px] font-black uppercase tracking-[0.2em] text-purple-600 px-2 pt-4 pb-1">📄 Справки, Пополнение и Прочее</div>
+                    
+                    <div class="faq-item border border-gray-100 rounded-2xl overflow-hidden">
+                        <button onclick="toggleFaq(this)" class="w-full p-5 text-left flex items-center justify-between font-bold text-sm text-gray-900 hover:bg-gray-50 transition-colors">
+                            <span>Как и где получить справку о задолженности?</span>
+                            <span class="faq-icon text-emerald-500 text-xl font-black flex-shrink-0 ml-4">+</span>
+                        </button>
+                        <div class="faq-answer px-5 pb-5 text-sm text-gray-600 font-medium leading-relaxed">
+                            Справку о наличии/отсутствии ссудной задолженности можно получить двумя путями:
+                            <ul class="list-decimal pl-5 mt-2 space-y-1">
+                                <li>В мобильном приложении Bereke: <strong>Сервисы → Документы по кредитам → Справка о ссудной задолженности</strong>.</li>
+                                <li>В любом ближайшем отделении Банка.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item border border-gray-100 rounded-2xl overflow-hidden">
+                        <button onclick="toggleFaq(this)" class="w-full p-5 text-left flex items-center justify-between font-bold text-sm text-gray-900 hover:bg-gray-50 transition-colors">
+                            <span>Как можно пополнить карту рассрочки Alğa?</span>
+                            <span class="faq-icon text-emerald-500 text-xl font-black flex-shrink-0 ml-4">+</span>
+                        </button>
+                        <div class="faq-answer px-5 pb-5 text-sm text-gray-600 font-medium leading-relaxed">
+                            Пополнение доступно следующими способами:
+                            <ul class="list-disc pl-5 mt-2 space-y-1">
+                                <li>Перевод по номеру телефона</li>
+                                <li>Перевод по номеру карты</li>
+                                <li>Безналичным путем (перевод на банковские реквизиты счета)</li>
+                                <li>Через банкоматы АО «Bereke Bank»</li>
+                                <li>Наличными через кассу</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item border border-gray-100 rounded-2xl overflow-hidden">
+                        <button onclick="toggleFaq(this)" class="w-full p-5 text-left flex items-center justify-between font-bold text-sm text-gray-900 hover:bg-gray-50 transition-colors">
+                            <span>Где взять реквизиты, сменить ПИН или оформить в Apple Pay?</span>
+                            <span class="faq-icon text-emerald-500 text-xl font-black flex-shrink-0 ml-4">+</span>
+                        </button>
+                        <div class="faq-answer px-5 pb-5 text-sm text-gray-600 font-medium leading-relaxed">
+                            В мобильном приложении банка выберите карту рассрочки Alğa → раздел Безопасность → «Установить ПИН-код» / «Реквизиты». Там же карту можно легко добавить в Apple Wallet, Google Wallet и Samsung Wallet.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================== SECTION: QUIZ ===================== -->
+        <div id="tab-quiz" class="tab-content animate-fade-in hidden space-y-6">
+            <div id="quiz-start" class="bg-white rounded-[3rem] p-12 card-shadow border border-gray-100 text-center">
+                <div class="w-24 h-24 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-8 animate-bounce">
+                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <h2 class="text-3xl font-black text-gray-900 italic mb-4 tracking-tighter">Alğa Expert Test</h2>
+                <p class="text-gray-500 max-w-sm mx-auto mb-10 font-medium">Проверьте свою квалификацию. Все результаты остаются только на вашем экране для самопроверки.</p>
+                <button onclick="startQuiz()" class="bg-slate-900 text-white px-12 py-5 rounded-[2rem] font-black text-sm uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-xl shadow-slate-200">
+                    Начать проверку
+                </button>
+            </div>
+
+            <div id="quiz-active" class="hidden space-y-6">
+                <div class="bg-white p-6 rounded-3xl card-shadow flex items-center justify-between">
+                    <span id="quiz-progress-text" class="text-[10px] font-black uppercase text-gray-400 tracking-widest">Вопрос 1 из 8</span>
+                    <div class="flex space-x-1" id="quiz-dots"></div>
+                </div>
+                <div id="question-card" class="bg-white rounded-[3rem] p-10 card-shadow border border-gray-100 animate-fade-in">
+                    <h3 id="question-text" class="text-xl font-black text-gray-900 mb-8 leading-tight">Текст вопроса</h3>
+                    <div id="options-grid" class="grid grid-cols-1 gap-4"></div>
+                    <div id="answer-feedback" class="hidden mt-6 p-4 rounded-2xl text-sm font-medium"></div>
+                </div>
+            </div>
+
+            <div id="quiz-final" class="hidden bg-white rounded-[3rem] p-12 card-shadow border border-gray-100 text-center animate-fade-in">
+                <h3 class="text-4xl font-black mb-4 tracking-tighter" id="final-score-title">0 / 8</h3>
+                <p class="text-lg font-bold text-gray-400 mb-10" id="final-message">Результат.</p>
+                <button onclick="resetQuiz()" class="text-emerald-600 font-black uppercase tracking-widest text-xs hover:underline italic">Пройти ещё раз</button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-5xl mx-auto px-6 text-center">
+        <div class="h-px bg-gray-200 w-full mb-8"></div>
+        <p class="text-[10px] font-black text-gray-300 uppercase tracking-[0.4em] mb-4">Bereke Bank Credit Card Dept © 2026</p>
+    </footer>
+
+    <script>
+        // --- Navigation ---
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + tabId).classList.add('active');
+            if (tabId === 'calculator') calculate();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- FAQ Toggle ---
+        function toggleFaq(btn) {
+            const item = btn.closest('.faq-item');
+            const answer = item.querySelector('.faq-answer');
+            const isOpen = item.classList.contains('open');
+            // Close all
+            document.querySelectorAll('.faq-item').forEach(el => {
+                el.classList.remove('open');
+                el.querySelector('.faq-answer').classList.remove('open');
+            });
+            // Open clicked if it was closed
+            if (!isOpen) {
+                item.classList.add('open');
+                answer.classList.add('open');
+            }
+        }
+
+        // --- Calculator Logic ---
+        let calcChart;
+        function calculate() {
+            const retail = parseFloat(document.getElementById('retail-val').value) || 0;
+            const cash = parseFloat(document.getElementById('cash-val').value) || 0;
+            const days = parseInt(document.getElementById('days-slider').value);
+
+            document.getElementById('days-label').innerText = `${days} дней`;
+            document.getElementById('days-display-text').innerText = `(за ${days} дн)`;
+
+            // === 1-Й МЕСЯЦ (ПЕРВЫЙ ПЛАТЕЖ) ===
+            const retailPart = retail >= 1000 ? retail / 6 : retail;
+            
+            let cashPrincipal = 0;
+            if (cash > 0) {
+                cashPrincipal = cash * 0.05;
+                if (cashPrincipal < 1000) cashPrincipal = Math.min(cash, 1000);
+            }
+
+            // PDF formula: Sum * 38% / 360 * days
+            const interest = cash > 0 ? (cash * 0.38 / 360) * days : 0;
+            const totalFirst = retailPart + cashPrincipal + interest;
+
+            // === ПОСЛЕДУЮЩИЕ МЕСЯЦЫ (ЕП) ===
+            const nextRetailPart = retail >= 1000 ? retail / 6 : 0; 
+            const remainingCash = Math.max(0, cash - cashPrincipal);
+            
+            let nextCashPrincipal = 0;
+            if (remainingCash > 0) {
+                nextCashPrincipal = remainingCash * 0.05;
+                if (nextCashPrincipal < 1000) nextCashPrincipal = Math.min(remainingCash, 1000);
+            }
+            
+            const nextInterest = remainingCash > 0 ? (remainingCash * 0.38 / 360) * 30 : 0;
+            const totalNext = nextRetailPart + nextCashPrincipal + nextInterest;
+
+            // Update UI
+            document.getElementById('res-total').innerText = Math.round(totalFirst).toLocaleString('ru') + ' ₸';
+            document.getElementById('res-retail').innerText = `+ ${Math.round(retailPart).toLocaleString('ru')} ₸`;
+            document.getElementById('res-cash').innerText = `+ ${Math.round(cashPrincipal).toLocaleString('ru')} ₸`;
+            document.getElementById('res-interest').innerText = `+ ${Math.round(interest).toLocaleString('ru')} ₸`;
+            
+            document.getElementById('res-next-month').innerText = Math.round(totalNext).toLocaleString('ru') + ' ₸';
+            document.getElementById('res-next-retail').innerText = Math.round(nextRetailPart).toLocaleString('ru') + ' ₸';
+            document.getElementById('res-next-cash').innerText = Math.round(nextCashPrincipal).toLocaleString('ru') + ' ₸';
+            document.getElementById('res-next-interest').innerText = Math.round(nextInterest).toLocaleString('ru') + ' ₸';
+
+            updateChart([retailPart || 0.001, cashPrincipal || 0.001, interest || 0.001]);
+            updateSchedule(retail, cash, days);
+        }
+
+        function updateSchedule(retail, cash, days) {
+            const tbody = document.getElementById('schedule-body');
+            tbody.innerHTML = '';
+
+            const retailPerMonth = retail >= 1000 ? retail / 6 : retail;
+            let remainCash = cash;
+            let totalInterest = 0;
+            let month = 1;
+            const fmt = v => Math.round(v).toLocaleString('ru');
+
+            while (remainCash > 0 || month <= 6) {
+                // Cash principal
+                let principal = 0;
+                if (remainCash > 0) {
+                    principal = remainCash * 0.05;
+                    if (principal < 1000) principal = Math.min(remainCash, 1000);
+                }
+
+                // Interest
+                const daysCount = month === 1 ? days : 30;
+                const interest = remainCash > 0 ? (remainCash * 0.38 / 360) * daysCount : 0;
+                totalInterest += interest;
+
+                // Retail this month (only 6 months)
+                const retailThis = month <= 6 ? retailPerMonth : 0;
+
+                const total = retailThis + principal + interest;
+                const newRemain = Math.max(0, remainCash - principal);
+
+                const isFirst = month === 1;
+                const isLast = newRemain === 0 && month >= 6;
+
+                const tr = document.createElement('tr');
+                tr.className = `border-b border-gray-50 ${isFirst ? 'bg-emerald-50/40' : ''} ${isLast ? 'bg-blue-50/30' : ''}`;
+                tr.innerHTML = `
+                    <td class="py-3 pr-4 font-black text-gray-700">
+                        ${month}
+                        ${isFirst ? '<span class="ml-1 text-[9px] bg-emerald-500 text-white px-1.5 py-0.5 rounded-lg">1-й</span>' : ''}
+                    </td>
+                    <td class="py-3 pr-4 text-right font-bold text-emerald-700">${retailThis > 0 ? fmt(retailThis) + ' ₸' : '—'}</td>
+                    <td class="py-3 pr-4 text-right font-bold text-blue-700">${principal > 0 ? fmt(principal) + ' ₸' : '—'}</td>
+                    <td class="py-3 pr-4 text-right font-bold text-amber-600">${interest > 0 ? fmt(interest) + ' ₸' : '—'}</td>
+                    <td class="py-3 pr-4 text-right font-black text-gray-900">${fmt(total)} ₸</td>
+                    <td class="py-3 text-right font-bold text-gray-400">${newRemain > 0 ? fmt(newRemain) + ' ₸' : '<span class="text-emerald-500 font-black">✓ 0</span>'}</td>
+                `;
+                tbody.appendChild(tr);
+
+                remainCash = newRemain;
+                month++;
+                if (month > 60) break; // safety cap
+            }
+
+            // Overpay = total interest paid
+            document.getElementById('schedule-overpay').innerText = fmt(totalInterest) + ' ₸';
+        }
+
+        function updateChart(data) {
+            const ctx = document.getElementById('calcChart').getContext('2d');
+            if (calcChart) {
+                calcChart.data.datasets[0].data = data;
+                calcChart.update();
+            } else {
+                calcChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Рассрочка', 'Cash (осн)', 'Проценты'],
+                        datasets: [{
+                            data: data,
+                            backgroundColor: ['#10b981', '#3b82f6', '#f59e0b'],
+                            borderWidth: 0,
+                            cutout: '85%'
+                        }]
+                    },
+                    options: {
+                        plugins: { legend: { display: false } },
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+        }
+
+        // --- Quiz System ---
+        const quizItems = [
+            {
+                q: "Будет ли рассрочка 0% на покупку в 900 тенге?",
+                a: ["Да, это же покупка", "Нет, минимальная сумма — 1 000 ₸", "Да, если это супермаркет"],
+                correct: 1,
+                reason: "Рассрочка активируется только на чеки от 1 000 тенге. Чек 900 ₸ — не рассрочка."
+            },
+            {
+                q: "Какая ГЭСВ на операции снятия наличных?",
+                a: ["38%", "0% (рассрочка)", "До 46%"],
+                correct: 2,
+                reason: "Ставка — 38% годовых, но ГЭСВ с учетом всех платежей составляет до 46%."
+            },
+            {
+                q: "До какого числа нужно погасить ежемесячный платеж?",
+                a: ["До 1-го числа", "До 20-го числа", "До 15-го числа"],
+                correct: 1,
+                reason: "Крайний срок погашения — до 20-го числа месяца, следующего за расчетным."
+            },
+            {
+                q: "Какая комиссия банка за перевод с карты Alğa в другой банк?",
+                a: ["0% — без комиссии", "0,5% от суммы", "1% от суммы"],
+                correct: 0,
+                reason: "Комиссия за сам перевод = 0 ₸. Однако на эту сумму сразу начисляются кредитные проценты (38% годовых)."
+            },
+            {
+                q: "Какова пеня, если клиент просрочил платеж?",
+                a: ["38% годовых", "0,5% за каждый день просрочки", "Разовый штраф 5000 ₸"],
+                correct: 1,
+                reason: "Начисляется неустойка 0,5% от суммы просроченного платежа за каждый день (но не более 10% в год)."
+            },
+            {
+                q: "Сколько стоит годовое обслуживание?",
+                a: ["Бесплатно на весь срок", "0 ₸ первый год, далее 1000 ₸ в месяц", "1000 ₸ в месяц с первого дня"],
+                correct: 1,
+                reason: "Выпуск и первый год обслуживания — бесплатно. Со второго года — 1000 тенге в месяц."
+            },
+            {
+                q: "Как в Way4 проверить сумму для полного погашения долга?",
+                a: ["Contract Info View → Cr Limit", "Issuing Contracts – Balance Prediction → кнопка k → Log → To Pay Closure", "Cardholder Reports → Statement"],
+                correct: 1,
+                reason: "Через Balance Prediction: Contract# → кнопка k → OK → Log → Acnt balance prediction → Messages → значение To Pay Closure."
+            },
+            {
+                q: "Где клиент может получить справку о задолженности?",
+                a: ["Только в отделении банка", "В МП Bereke (Сервисы → Документы по кредитам) или в отделении", "Справка не выдается"],
+                correct: 1,
+                reason: "Получить справку можно как онлайн через мобильное приложение, так и оффлайн в отделении банка."
+            }
+        ];
+
+        let currentIdx = 0;
+        let score = 0;
+        let answered = false;
+
+        function startQuiz() {
+            currentIdx = 0;
+            score = 0;
+            answered = false;
+            document.getElementById('quiz-start').classList.add('hidden');
+            document.getElementById('quiz-final').classList.add('hidden');
+            document.getElementById('quiz-active').classList.remove('hidden');
+            showQuestion();
+        }
+
+        function resetQuiz() {
+            document.getElementById('quiz-final').classList.add('hidden');
+            document.getElementById('quiz-start').classList.remove('hidden');
+        }
+
+        function showQuestion() {
+            answered = false;
+            const item = quizItems[currentIdx];
+            document.getElementById('quiz-progress-text').innerText = `Вопрос ${currentIdx + 1} из ${quizItems.length}`;
+            document.getElementById('question-text').innerText = item.q;
+            
+            const feedback = document.getElementById('answer-feedback');
+            feedback.classList.add('hidden');
+            feedback.className = 'hidden mt-6 p-4 rounded-2xl text-sm font-medium';
+            
+            const grid = document.getElementById('options-grid');
+            grid.innerHTML = '';
+            
+            item.a.forEach((ans, i) => {
+                const btn = document.createElement('button');
+                btn.className = "p-5 bg-slate-50 border-2 border-gray-100 rounded-[2rem] text-left font-bold text-sm hover:border-emerald-500 hover:bg-emerald-50 transition-all active:scale-95";
+                btn.innerText = ans;
+                btn.onclick = () => checkAnswer(i, btn);
+                grid.appendChild(btn);
+            });
+
+            const dots = document.getElementById('quiz-dots');
+            dots.innerHTML = '';
+            quizItems.forEach((_, i) => {
+                const dot = document.createElement('div');
+                dot.className = `w-2 h-2 rounded-full transition-all ${i < currentIdx ? 'bg-emerald-500' : i === currentIdx ? 'bg-emerald-300' : 'bg-gray-200'}`;
+                dots.appendChild(dot);
+            });
+        }
+
+        function checkAnswer(idx, btn) {
+            if (answered) return;
+            answered = true;
+
+            const item = quizItems[currentIdx];
+            const btns = document.querySelectorAll('#options-grid button');
+            
+            btns.forEach((b, i) => {
+                b.disabled = true;
+                if (i === item.correct) {
+                    b.className = b.className.replace('bg-slate-50 border-gray-100', 'bg-emerald-50 border-emerald-500 text-emerald-800');
+                }
+            });
+
+            const feedback = document.getElementById('answer-feedback');
+            if (idx === item.correct) {
+                score++;
+                btn.className = btn.className.replace('bg-slate-50 border-gray-100', 'bg-emerald-50 border-emerald-500 text-emerald-800');
+                feedback.className = 'mt-6 p-4 rounded-2xl text-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200';
+                feedback.innerHTML = `✅ <strong>Верно!</strong> ${item.reason}`;
+            } else {
+                btn.className = btn.className.replace('bg-slate-50 border-gray-100', 'bg-rose-50 border-rose-400 text-rose-800');
+                feedback.className = 'mt-6 p-4 rounded-2xl text-sm font-medium bg-rose-50 text-rose-800 border border-rose-200';
+                feedback.innerHTML = `❌ <strong>Неверно.</strong> ${item.reason}`;
+            }
+            feedback.classList.remove('hidden');
+
+            // Auto-next after 3.5s (giving more time to read rationale)
+            setTimeout(() => {
+                currentIdx++;
+                if (currentIdx < quizItems.length) {
+                    showQuestion();
+                } else {
+                    showFinal();
+                }
+            }, 3500);
+        }
+
+        function showFinal() {
+            document.getElementById('quiz-active').classList.add('hidden');
+            document.getElementById('quiz-final').classList.remove('hidden');
+            document.getElementById('final-score-title').innerText = `${score} / ${quizItems.length}`;
+            
+            let msg, color;
+            if (score === quizItems.length) {
+                msg = "🏆 Великолепно! Вы настоящий эксперт по Alğa!";
+                color = "text-emerald-600";
+            } else if (score >= quizItems.length * 0.75) {
+                msg = "👍 Хороший результат! Освежите знания по Way4 и тарифам.";
+                color = "text-blue-600";
+            } else {
+                msg = "📚 Есть над чем поработать. Изучите тарифы и FAQ.";
+                color = "text-amber-600";
+            }
+            const el = document.getElementById('final-message');
+            el.innerText = msg;
+            el.className = `text-lg font-bold mb-10 ${color}`;
+        }
+
+        window.onload = function() {
+            calculate();
+        };
+    </script>
+</body>
+</html>
+```
